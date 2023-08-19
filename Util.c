@@ -3,6 +3,12 @@
 int num_rows = 0;
 int num_cols = 0;
 char ** map;
+void print_map(void){
+    for(int i = 0; i < num_cols; i++){
+        printf("%s\n",map[i]);
+    }
+}
+
 void get_file(char * file_name){
 
     FILE * file_ptr;

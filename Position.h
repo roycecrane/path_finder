@@ -1,30 +1,28 @@
 #ifndef Position_h
 #define Position_h
-
 #include <stdio.h>
-
 #include <stdlib.h>
-
 
 typedef struct Positon {
     int val;
     int index;
+    int row;
+    int col;
     
     struct Positon * last;
     struct Positon * next;
 } position;
 
-
-extern position * first_node;
-extern position * last_node;
+//extern position * start_pos;
+//extern position * end_pos;
 extern int nodeIndex;
 
-void deleteList(void);
-position * get_node(int);
-position * newNode(int);
-void insertAtEnd(int val);
-void printList(void);
-position * getNode(int idx, position * currentNode);
+
+position * append(int col, int row, int val);
+position * new_node(int col, int row, int val);
+position * get_pos(int col, int row);
+void print_list(void);
+void delete_list(void);
 
 
 

@@ -1,15 +1,17 @@
 #include "Position.h"
 
-position * first_node = NULL;
-position * last_node = NULL;
+position * start_pos = NULL;
+position * end_pos = NULL;
 
 int nodeIndex = 0 ;
 
-position * newNode(int val){
+position * new_node(int col, int row, int val){
     
     position * n = (position *) malloc(sizeof(position));
     
     n->val = val;
+    n->col = col;
+    n->row = row;
     n->last = NULL;
     n->next = NULL;
     n->index = nodeIndex;
@@ -19,25 +21,23 @@ position * newNode(int val){
     return n;
 };
 
-void insertAtEnd(int val){
-    
-    position * link = newNode(val);
-    
-    if(last_node){
-        link->last = last_node;
-        last_node->next = link;
+position * append(int col, int row, int val){
+    position * link = new_node(row, col, val);
+    if(end_pos){
+        link->last = end_pos;
+        end_pos->next = link;
     }
-    
-    last_node = link;
-    if(!first_node){
-        first_node = link;
+    end_pos = link;
+    if(!start_pos){
+        start_pos = link;
     }
-  
+    return link;
 }
-position * get_node(int idx){
-    position * n = first_node;
+
+position * get_pos(int col, int row){
+    position * n = start_pos;
      while(n){
-         if(n->index == idx){
+         if(n->row == row && n->col == col){
              return n;
          }
          n = n->next;
@@ -45,8 +45,8 @@ position * get_node(int idx){
      return NULL;
 }
 
-void deleteList(void){
-    position * current = first_node;
+void delete_list(void){
+    position * current = start_pos;
     position * next = NULL;
     int i = 0;
     
@@ -59,10 +59,10 @@ void deleteList(void){
     }
 }
 
-void printList(void){
-    position * n = first_node;
+void print_list(void){
+    position * n = start_pos;
     while(n){
-        printf("%d\n",n->val);
+        printf("val: %d\ncol: %d\nrow: %d\n",n->val,n->col,n->row);
         n = n->next;
     }
 }
