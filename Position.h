@@ -8,19 +8,19 @@ typedef struct Positon {
     int index;
     int row;
     int col;
-    
     struct Positon * last;
     struct Positon * next;
 } position;
 
-//extern position * start_pos;
-//extern position * end_pos;
+extern position * start_pos;
+extern position * end_pos;
 extern int nodeIndex;
 
 
-position * append(int col, int row, int val);
-position * new_node(int col, int row, int val);
+position * add_pos(int col, int row, int val);
+position * init_pos(int col, int row, int val);
 position * get_pos(int col, int row);
+
 void print_list(void);
 void delete_list(void);
 

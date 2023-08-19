@@ -2,13 +2,11 @@
 
 position * start_pos = NULL;
 position * end_pos = NULL;
-
 int nodeIndex = 0 ;
 
-position * new_node(int col, int row, int val){
+position * init_pos(int col, int row, int val){
     
     position * n = (position *) malloc(sizeof(position));
-    
     n->val = val;
     n->col = col;
     n->row = row;
@@ -21,17 +19,18 @@ position * new_node(int col, int row, int val){
     return n;
 };
 
-position * append(int col, int row, int val){
-    position * link = new_node(row, col, val);
+position * add_pos(int col, int row, int val){
+    
+    position * new_pos = init_pos(col, row, val);
     if(end_pos){
-        link->last = end_pos;
-        end_pos->next = link;
+        new_pos->last = end_pos;
+        end_pos->next = new_pos;
     }
-    end_pos = link;
+    end_pos = new_pos;
     if(!start_pos){
-        start_pos = link;
+        start_pos = new_pos;
     }
-    return link;
+    return new_pos;
 }
 
 position * get_pos(int col, int row){

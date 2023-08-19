@@ -1,5 +1,6 @@
 #include "Util.h"
 #include <sys/stat.h>
+
 int num_rows = 0;
 int num_cols = 0;
 char ** map;
