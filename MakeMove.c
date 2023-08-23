@@ -1,7 +1,8 @@
 #include "MakeMove.h"
 
 #define MAX_DEPTH 3
-static int lowest_out_come = 140;
+#define MAX_VALUE 85
+static int lowest_out_come = 90;
 
 void set_params(int * start, int * end){
     start_coords = start;
@@ -9,24 +10,25 @@ void set_params(int * start, int * end){
 }
 
 pos_node * make_move(pos_node * pos){
-    if( pos->branch_depth > MAX_DEPTH || pos->val > lowest_out_come){
+    if( pos->branch_depth > MAX_DEPTH || MAX_VALUE < pos->val){
         return pos;
     }
-    mov * chosen_move = get_best_move(pos);
     
+    mov * chosen_move = get_best_move(pos);
     get_best_move(pos);
-    if(chosen_move) check_dist(pos, *chosen_move);
+
     if(pos->back_track){
         delete_node(pos->next);
         pos->back_track = 0;
     }
+    
     if(chosen_move){
         int new_col = pos->col + chosen_move->col;
         int new_row = pos->row + chosen_move->row;
         int new_val = pos->val + chosen_move->val;
  
         free(chosen_move);
-        pos_node * new_pos  = add_node(pos, new_col, new_row, new_val, pos->branch_depth);
+        pos_node * new_pos = add_node(pos, new_col, new_row, new_val, pos->branch_depth);
         pos = new_pos;
         
         if(new_col == end_coords[0] && new_row == end_coords[1]){
@@ -38,6 +40,7 @@ pos_node * make_move(pos_node * pos){
         new_pos->back_track = 1;
         make_move(new_pos);
     }
+    
     return pos;
 }
 
@@ -90,6 +93,7 @@ mov * get_best_move(pos_node * pos){
     mov * min_dist_move = NULL;
     float min_dist = 0.f;
     float current_dist = 0.f;
+    
     for(int j = 0;  j < 4; j++){
         if(!moves[j])
             continue;
@@ -100,7 +104,19 @@ mov * get_best_move(pos_node * pos){
         }
         if(current_dist < min_dist ){
             min_dist_move = moves[j];
+            min_dist = current_dist;
         }
+        if(current_dist == min_dist){
+            if(min_dist_move != moves[j]){
+                mov * outcome = test_options(pos, moves[j], min_dist_move);
+                if(outcome){
+                    min_dist_move = outcome;
+                }
+                
+            }
+            
+        }
+        
     }
     for(int i = 0; i < 4; i++){
         if(!moves[i])
@@ -114,6 +130,7 @@ mov * get_best_move(pos_node * pos){
             }
         }
     }
+
     
     mov * result = NULL;
     if(min_dist_move)
@@ -126,3 +143,37 @@ mov * get_best_move(pos_node * pos){
     }
     return result;
 }
+//mov * find_best_direction(pos_node* pos,  mov * move_a, mov * move_b){
+//
+//    int end_col_dist = end_coords[0] - pos->col;
+//    int end_row_dist = end_coords[1] - pos->row;
+//
+//    int best_col_dir = (end_col_dist > 0) - (end_col_dist < 0);
+//    int best_row_dir = (end_row_dist > 0) - (end_row_dist < 0);
+//    if(best_col_dir){
+//        if(move_a){
+//            if(move_a->col == best_col_dir){
+//                return move_a;
+//            }
+//        }
+//        if(move_b){
+//            if(move_b->col == best_col_dir){
+//                return move_b;
+//            }
+//        }
+//
+//    }
+//    if(best_row_dir){
+//        if(move_a){
+//            if(move_a->row == best_row_dir){
+//                return move_a;
+//            }
+//        }
+//        if(move_b){
+//            if(move_b->row == best_row_dir){
+//                return move_b;
+//            }
+//        }
+//    }
+//    return move_a;
+//}

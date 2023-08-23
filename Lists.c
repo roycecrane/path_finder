@@ -90,7 +90,6 @@ void delete_node(pos_node * pos){
             pos->next->last = pos->last;
         }
     }
-    
     free(pos);
 }
 void delete_list(pos_node * pos){
