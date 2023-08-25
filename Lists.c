@@ -1,15 +1,12 @@
 #include "Lists.h"
 pos_node ** test_lists;
-int numebr_of_test_lists = 0;
-
+int num_states_explored = 0;
 pos_node * new_list(int col, int row, int val,int branch_depth){
-    
     pos_node * new_pos = init_node(col, row, val, branch_depth);
     return new_pos;
 }
 
 pos_node * add_node(pos_node * pos, int col, int row, int val, int branch_depth){
-    
     pos_node * new_pos = init_node(col, row, val,branch_depth);
     pos_node * last_node = get_last_node(pos);
     if(last_node){
@@ -25,6 +22,7 @@ pos_node * add_node(pos_node * pos, int col, int row, int val, int branch_depth)
 }
 
 pos_node * init_node(int col, int row, int val, int branch_depth){
+    num_states_explored++;
     pos_node * n = (pos_node *) malloc(sizeof(pos_node));
     n->branch_depth = branch_depth;
     n->val = val;
@@ -101,13 +99,3 @@ void delete_list(pos_node * pos){
     }
 }
 
-//void delete_lists(void){
-//    for(int i = 0; i < numebr_of_test_lists; i++){
-//        pos_node * current_node = test_lists[i];
-//        while(current_node){
-//            pos_node * last_node = current_node;
-//            current_node = current_node->next;
-//            free(last_node);
-//        }
-//    }
-//}

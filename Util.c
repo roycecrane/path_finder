@@ -19,19 +19,20 @@ void get_file(char * file_name){
     struct stat st;
     
     stat(file_name, &st);
-    
+//    get file size
     int file_size = (int) st.st_size;
-    
+//    get the len of first row
     file_ptr = fopen(file_name, "r");
     num_rows = (int) getline(&line, &len, file_ptr);
+//    send file ptr back to first row
     rewind(file_ptr);
+//    use file size and row len to get col len
     num_cols = file_size / num_rows;
     int i = 0;
+//    allocate memory for map matrix and fill it with fill with file vals
     map = (char**)malloc(num_cols * sizeof(char*));
-
     for (i = 0; i < num_cols; i++)
         map[i] = (char*)malloc(num_rows * sizeof(char));
-    
     ssize_t read;
     if (file_ptr == NULL)
         exit(EXIT_FAILURE);

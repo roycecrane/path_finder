@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
 typedef struct ListNode {
     int val;
     int index;
@@ -16,7 +15,7 @@ typedef struct ListNode {
 } pos_node;
 
 extern int numebr_of_test_lists;
-
+extern int num_states_explored;
 pos_node * new_list(int col, int row, int val, int branch_depth);
 pos_node * init_node(int col, int row, int val,int branch_depth);
 pos_node * add_node(pos_node * pos, int col, int row, int val, int branch_depth);

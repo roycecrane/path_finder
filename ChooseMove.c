@@ -42,5 +42,3 @@ mov* check_move(pos_node* pos, mov possible_move){
     }
     return create_move(possible_move);
 }
-
-
